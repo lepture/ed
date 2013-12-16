@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ED</title>
+  <link rel="stylesheet" href="build/build.css">
+  <style>
+    #editor {
+      max-width: 680px;
+      min-height: 300px;
+      margin: 40px auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="editor"></div>
+  <script src="build/build.js"></script>
+  <script>
+    require('ed')(document.getElementById('editor'));
+  </script>
+</body>
+</html>

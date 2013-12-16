@@ -2,12 +2,14 @@
   "name": "ed",
   "repo": "lepture/ed",
   "description": "A quora like editor.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "lepture/caret": "*",
+    "lepture/format": "*"
+  },
   "development": {},
   "license": "MIT",
-  "main": "index.js",
   "scripts": [
     "index.js"
   ],

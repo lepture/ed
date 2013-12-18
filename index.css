@@ -1,0 +1,38 @@
+.ed-container {
+}
+
+.ed-toolbar {
+  border-bottom: 1px solid #ddd;
+}
+
+.ed-toolbar .ed-button {
+  text-align: center;
+  text-decoration: none !important;
+  color: #2c3e50;
+  margin: 1px;
+  border: 1px solid transparent;
+  opacity: 0.8;
+  border-radius: 3px;
+  cursor: pointer;
+  background: transparent;
+  font-size: 14px;
+  padding: 5px;
+  outline: none;
+}
+.ed-toolbar .ed-button:hover {
+  opacity: 1;
+}
+.ed-toolbar .ed-button-active {
+  border-color: #95a5a6;
+}
+.ed-toolbar .ed-button-underline, .ed-toolbar .ed-button-ol {
+  margin-right: 14px;
+}
+.ed-content {
+  outline: none;
+  padding: 14px 8px;
+  min-height: 200px;
+}
+
+.ed-image-overlay {
+}

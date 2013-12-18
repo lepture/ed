@@ -6,7 +6,8 @@
   "keywords": [],
   "dependencies": {
     "lepture/caret": "*",
-    "lepture/format": "*"
+    "lepture/format": "*",
+    "component/event": "*"
   },
   "development": {},
   "license": "MIT",
@@ -14,6 +15,7 @@
     "index.js"
   ],
   "styles": [
+    "icon.css",
     "index.css"
   ]
 }

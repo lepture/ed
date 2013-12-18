@@ -42,8 +42,13 @@ Editor.prototype.setupToolbar = function() {
     button.name = name;
 
     events.bind(button, 'click', function() {
-      // TODO: link and image
-      format(name);
+      me.caret.save();
+      if (name === 'a') {
+        me.caret.restore();
+      } else if (name === 'img') {
+      } else {
+        format(name);
+      }
       me.content.focus();
     });
 

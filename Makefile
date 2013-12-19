@@ -1,5 +1,5 @@
 
-build: components index.js ed.css
+build: components index.js index.css
 	@component build --dev
 
 components: component.json

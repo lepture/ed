@@ -1,6 +1,7 @@
 var format = require('format');
 var Caret = require('caret');
 var events = require('event');
+var classes = require('classes');
 
 /**
  * The interface of Editor
@@ -25,6 +26,8 @@ function Editor(element, options) {
 
   this.caret = new Caret(content);
 
+  // fix keyboard behavior
+  require('k-format')(content, {caret: this.caret});
   this.setupToolbar();
 }
 
@@ -32,7 +35,7 @@ Editor.prototype.setupToolbar = function() {
   var me = this;
 
   // buttons in toolbar with binding events
-  function createButton(name, title) {
+  function createButton(name, title, func) {
     // button will not lose caret selection
     var button = document.createElement('button');
     button.className = 'ed-button icon-' + name + ' ed-button-' + name;
@@ -41,11 +44,10 @@ Editor.prototype.setupToolbar = function() {
     }
     button.name = name;
 
-    events.bind(button, 'click', function() {
-      me.caret.save();
-      if (name === 'a') {
-        me.caret.restore();
-      } else if (name === 'img') {
+    events.bind(button, 'click', function(e) {
+      e.preventDefault();
+      if (func) {
+        func(e);
       } else {
         format(name);
       }
@@ -56,6 +58,16 @@ Editor.prototype.setupToolbar = function() {
     return button;
   }
 
+  var input = document.createElement('input');
+  input.className = 'ed-link-input';
+  input.placeholder = 'http://';
+
+  createButton('a', 'Insert a link', function(e) {
+    classes(me.toolbar).toggle('ed-link-input-active');
+  });
+
+  me.toolbar.appendChild(input);
+
   createButton('bold');
   createButton('italic');
   createButton('strike');
@@ -65,7 +77,6 @@ Editor.prototype.setupToolbar = function() {
   createButton('ul', 'Unordered List');
   createButton('ol', 'Ordered List');
 
-  createButton('a', 'Insert a link');
   createButton('img', 'Insert an image');
 };
 Editor.prototype.setupContent = function() {

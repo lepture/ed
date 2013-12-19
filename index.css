@@ -34,5 +34,16 @@
   min-height: 200px;
 }
 
+.ed-link-input {
+  display: none;
+}
+.ed-link-input-active button {
+  display: none;
+}
+.ed-link-input-active .ed-link-input,
+.ed-link-input-active .ed-button-a {
+  display: initial;
+}
+
 .ed-image-overlay {
 }

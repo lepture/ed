@@ -52,6 +52,7 @@ Editor.prototype.setupToolbar = function() {
         format(name);
       }
       me.content.focus();
+      refreshStatus(me.toolbar);
     });
 
     me.toolbar.appendChild(button);
@@ -87,3 +88,16 @@ Editor.prototype.handleUpload = function() {
 };
 
 module.exports = Editor;
+
+function refreshStatus(toolbar) {
+  var buttons = toolbar.getElementsByTagName('button');
+  for (var i = 0; i < buttons.length; i++) {
+    (function(button) {
+      if (format.is(button.name)) {
+        classes(button).add('ed-button-active');
+      } else {
+        classes(button).remove('ed-button-active');
+      }
+    })(buttons[i]);
+  }
+}

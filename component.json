@@ -12,7 +12,9 @@
     "component/event": "*",
     "component/classes": "*"
   },
-  "development": {},
+  "development": {
+    "lepture/yue.css": "*"
+  },
   "license": "MIT",
   "scripts": [
     "index.js"

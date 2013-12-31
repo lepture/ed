@@ -25,7 +25,7 @@
 .ed-toolbar .ed-button-active {
   border-color: #95a5a6;
 }
-.ed-toolbar .ed-button-underline, .ed-toolbar .ed-button-ol {
+.ed-toolbar .ed-button-underline, .ed-toolbar .ed-button-h2 {
   margin-right: 14px;
 }
 .ed-content {
@@ -36,6 +36,13 @@
 
 .ed-link-input {
   display: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 60%;
+  margin: 1px;
+  padding: 5px;
+  border: 1px solid transparent;
 }
 .ed-link-input-active button {
   display: none;
@@ -46,4 +53,10 @@
 }
 
 .ed-image-overlay {
+}
+
+.icon-h2:before {
+  content: 'H';
+  font-weight: bold;
+  font-family: sans-serif;
 }

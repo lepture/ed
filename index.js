@@ -60,6 +60,7 @@ Editor.prototype.setupToolbar = function() {
 
   var input = document.createElement('input');
   input.className = 'ed-link-input';
+  input.type = 'url';
   input.placeholder = 'http://';
 
   createButton('a', 'Insert a link', function(e) {
@@ -76,6 +77,7 @@ Editor.prototype.setupToolbar = function() {
   createButton('blockquote', 'Blockquote text');
   createButton('ul', 'Unordered List');
   createButton('ol', 'Ordered List');
+  createButton('h2', 'Heading');
 
   createButton('img', 'Insert an image');
 };

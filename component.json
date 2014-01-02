@@ -9,6 +9,7 @@
     "lepture/format": "*",
     "lepture/k-format": "*",
     "lepture/sanitize": "*",
+    "lepture/upload": "*",
     "yields/k": "*",
     "component/event": "*",
     "component/classes": "*"

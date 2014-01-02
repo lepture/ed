@@ -1,5 +1,6 @@
 var format = require('format');
 var Caret = require('caret');
+var Upload = require('upload');
 var events = require('event');
 var classes = require('classes');
 var sanitize = require('sanitize');
@@ -11,6 +12,7 @@ function Editor(element, options) {
   if (!(this instanceof Editor)) {
     return new Editor(element, options);
   }
+  this.options = options || {};
 
   var toolbar = document.createElement('div');
   toolbar.className = 'ed-toolbar';
@@ -43,6 +45,47 @@ function Editor(element, options) {
     refreshStatus(buttons);
   });
 }
+Editor.prototype.upload = function(image, callback) {
+  var me = this;
+  var range = me.caret.range();
+
+  // default callback
+  callback = callback || function(err, url) {
+    if (!err && url) {
+      format.img(url);
+      me.caret.restore(range);
+      me.content.focus();
+    }
+  };
+
+  var path = me.options.path;
+  if (!path) {
+    if (!window.FileReader) {
+      throw new Error('Your browser does not support uploading image');
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      callback(null, e.target.result);
+    };
+    reader.readAsDataURL(image);
+    return reader;
+  }
+  if (!window.FormData) {
+    throw new Error('Your browser does not support uploading image');
+  }
+
+  var resolve = me.options.resolve || function(body) {
+    if (!body) return;
+    body = JSON.parse(body);
+    // guess the name
+    return body.url || body.image || body.data;
+  };
+  var upload = new Upload(image);
+  upload.to(me.options, function(err, res) {
+    callback(err, resolve(res.response));
+  });
+  return upload;
+};
 Editor.prototype.value = function() {
   return sanitize(this.content.innerHTML);
 };
@@ -82,8 +125,7 @@ function setupToolbar(me) {
 
   toolbar._class = classes(toolbar);
 
-  createButton('a', 'Insert a link', function(e) {
-    e.preventDefault();
+  createButton('a', 'Insert a link', function() {
     if (!toolbar._class.has('ed-link-input-active')) {
       toolbar._class.add('ed-link-input-active');
       var node = me.caret.parent();
@@ -108,7 +150,18 @@ function setupToolbar(me) {
   createButton('ol', 'Ordered List');
   createButton('h2', 'Heading');
 
-  createButton('img', 'Insert an image');
+  var fileInput = createFileInput();
+  createButton('img', 'Insert an image', function() {
+    fileInput.onchange = function(e) {
+      var files = fileInput.files;
+      for (var i = 0; i < files.length; i++) {
+        (function(file) {
+          me.upload(file);
+        })(files[i]);
+      }
+    };
+    fileInput.click();
+  });
 
   function linky(e) {
     if (!e.keyCode || e.keyCode === 13) {
@@ -140,4 +193,16 @@ function refreshStatus(buttons) {
       }
     })(buttons[i]);
   }
+}
+
+function createFileInput() {
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.multiple = true;
+  input.style.position = 'absolute';
+  input.style.top = '-999999px';
+  input.style.left = '-999999px';
+  document.body.appendChild(input);
+  return input;
 }

@@ -8,6 +8,7 @@
     "lepture/caret": "*",
     "lepture/format": "*",
     "lepture/k-format": "*",
+    "lepture/sanitize": "*",
     "yields/k": "*",
     "component/event": "*",
     "component/classes": "*"

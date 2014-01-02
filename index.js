@@ -2,6 +2,7 @@ var format = require('format');
 var Caret = require('caret');
 var events = require('event');
 var classes = require('classes');
+var sanitize = require('sanitize');
 
 /**
  * The interface of Editor
@@ -42,6 +43,9 @@ function Editor(element, options) {
     refreshStatus(buttons);
   });
 }
+Editor.prototype.value = function() {
+  return sanitize(this.content.innerHTML);
+};
 
 module.exports = Editor;
 

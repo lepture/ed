@@ -28,12 +28,24 @@ function Editor(element, options) {
 
   // fix keyboard behavior
   require('k-format')(content, {caret: this.caret});
-  this.setupToolbar();
+
+  setupToolbar(this);
+
+  var buttons = toolbar.getElementsByTagName('button');
+  events.bind(content, 'click', function() {
+    refreshStatus(buttons);
+  });
+  events.bind(content, 'keyup', function() {
+    refreshStatus(buttons);
+  });
+  events.bind(toolbar, 'click', function() {
+    refreshStatus(buttons);
+  });
 }
 
-Editor.prototype.setupToolbar = function() {
-  var me = this;
+module.exports = Editor;
 
+function setupToolbar(me) {
   // buttons in toolbar with binding events
   function createButton(name, title, func) {
     // button will not lose caret selection
@@ -52,7 +64,6 @@ Editor.prototype.setupToolbar = function() {
         format(name);
       }
       me.content.focus();
-      refreshStatus(me.toolbar);
     });
 
     me.toolbar.appendChild(button);
@@ -81,16 +92,9 @@ Editor.prototype.setupToolbar = function() {
   createButton('h2', 'Heading');
 
   createButton('img', 'Insert an image');
-};
-Editor.prototype.setupContent = function() {
-};
-Editor.prototype.handleUpload = function() {
-};
+}
 
-module.exports = Editor;
-
-function refreshStatus(toolbar) {
-  var buttons = toolbar.getElementsByTagName('button');
+function refreshStatus(buttons) {
   for (var i = 0; i < buttons.length; i++) {
     (function(button) {
       if (format.is(button.name)) {

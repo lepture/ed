@@ -25,7 +25,7 @@
 .ed-toolbar .ed-button-active {
   border-color: #95a5a6;
 }
-.ed-toolbar .ed-button-underline, .ed-toolbar .ed-button-h2 {
+.ed-toolbar .ed-button-strike, .ed-toolbar .ed-button-h2 {
   margin-right: 14px;
 }
 .ed-content {

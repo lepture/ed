@@ -46,6 +46,8 @@ function Editor(element, options) {
 module.exports = Editor;
 
 function setupToolbar(me) {
+  var toolbar = me.toolbar;
+
   // buttons in toolbar with binding events
   function createButton(name, title, func) {
     // button will not lose caret selection
@@ -63,10 +65,9 @@ function setupToolbar(me) {
       } else {
         format(name);
       }
-      me.content.focus();
     });
 
-    me.toolbar.appendChild(button);
+    toolbar.appendChild(button);
     return button;
   }
 
@@ -75,16 +76,28 @@ function setupToolbar(me) {
   input.type = 'url';
   input.placeholder = 'http://';
 
-  createButton('a', 'Insert a link', function(e) {
-    classes(me.toolbar).toggle('ed-link-input-active');
-  });
+  toolbar._class = classes(toolbar);
 
-  me.toolbar.appendChild(input);
+  createButton('a', 'Insert a link', function(e) {
+    e.preventDefault();
+    if (!toolbar._class.has('ed-link-input-active')) {
+      toolbar._class.add('ed-link-input-active');
+      var node = me.caret.parent();
+      if (node.tagName.toLowerCase() === 'a') {
+        input.value = node.href;
+      } else {
+        input.value = '';
+        format.a('/');
+      }
+      me.caret.save();
+      input.focus();
+    }
+  });
+  toolbar.appendChild(input);
 
   createButton('bold');
   createButton('italic');
   createButton('strike');
-  createButton('underline');
 
   createButton('blockquote', 'Blockquote text');
   createButton('ul', 'Unordered List');
@@ -92,6 +105,25 @@ function setupToolbar(me) {
   createButton('h2', 'Heading');
 
   createButton('img', 'Insert an image');
+
+  function linky(e) {
+    if (!e.keyCode || e.keyCode === 13) {
+      e.preventDefault();
+      toolbar._class.remove('ed-link-input-active');
+      me.caret.restore();
+      var url = input.value;
+      if (url) {
+        if (!/https?:\/\//.test(url)) {
+          url = 'http://' + url;
+        }
+        format.a(url);
+      } else {
+        format.unlink();
+      }
+    }
+  }
+  events.bind(input, 'blur', linky);
+  events.bind(input, 'keydown', linky);
 }
 
 function refreshStatus(buttons) {

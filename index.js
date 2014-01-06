@@ -45,6 +45,10 @@ function Editor(element, options) {
     refreshStatus(buttons);
   });
 }
+
+/**
+ * Handle upload images
+ */
 Editor.prototype.upload = function(image, callback) {
   var me = this;
   var range = me.caret.range();
@@ -86,8 +90,12 @@ Editor.prototype.upload = function(image, callback) {
   });
   return upload;
 };
+
+/**
+ * Sanitized html results
+ */
 Editor.prototype.value = function() {
-  return sanitize(this.content.innerHTML);
+  return sanitize(this.content);
 };
 
 module.exports = Editor;

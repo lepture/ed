@@ -1,9 +1,12 @@
 {
   "name": "ed",
   "repo": "lepture/ed",
-  "description": "A quora like editor.",
+  "description": "A wysiwyg editor without configuration.",
   "version": "0.1.0",
-  "keywords": [],
+  "keywords": [
+    "editor",
+    "wysiwyg"
+  ],
   "dependencies": {
     "lepture/caret": "*",
     "lepture/format": "*",

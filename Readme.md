@@ -1,9 +1,9 @@
 # ed
 
-A quora like editor. **WIP**
+A simple yet functional editor without configuration. **WIP**
 
 I am sorry that you can't customize anything! And you will never be able
-to customize anything.
+to customize anything. I won't add any more buttons on the toolbar.
 
 ## Installation
 
@@ -24,7 +24,9 @@ ed(document.querySelectory('#editor'), {
 
 All options are related to image uploading.
 
-1. path: upload url path
+1. **path**: upload url path
+2. **headers**: extra headers for your image server
+3. **data**: extra body data for your image server
 
 ### .value()
 

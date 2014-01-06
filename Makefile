@@ -8,7 +8,7 @@ components: component.json
 clean:
 	rm -fr build components template.js
 
-gh-pages: componets
+gh-pages: components
 	@component build
 	@rm -fr gh-pages
 	@mkdir gh-pages

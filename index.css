@@ -55,7 +55,7 @@
 .ed-image-overlay {
 }
 
-.icon-h2:before {
+.ed-icon-h2:before {
   content: 'H';
   font-weight: bold;
   font-family: sans-serif;

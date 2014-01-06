@@ -107,7 +107,7 @@ function setupToolbar(me) {
   function createButton(name, title, func) {
     // button will not lose caret selection
     var button = document.createElement('button');
-    button.className = 'ed-button icon-' + name + ' ed-button-' + name;
+    button.className = 'ed-button ed-icon-' + name + ' ed-button-' + name;
     if (title) {
       button.title = title;
     }

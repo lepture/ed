@@ -2103,11 +2103,16 @@ function setupToolbar(me) {
       toolbar._class.remove('ed-link-input-active');
       me.caret.restore();
       var url = input.value;
+      var node = me.caret.parent();
       if (url) {
         if (!/https?:\/\//.test(url)) {
           url = 'http://' + url;
         }
-        format.a(url);
+        if (node.tagName.toLowerCase() === 'a') {
+          node.href = url;
+        } else {
+          format.a(url);
+        }
       } else {
         format.unlink();
       }

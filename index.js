@@ -54,17 +54,17 @@ function Editor(element, options) {
 /**
  * Handle upload images
  */
-Editor.prototype.upload = function(image, callback) {
+Editor.prototype.upload = function(image) {
   var me = this;
   var range = me.caret.range();
 
   // default callback
-  callback = callback || function(err, url) {
+  var callback = me.options.callback || function(err, url) {
     if (!err && url) {
       format.img(url);
-      me.caret.restore(range);
-      me.content.focus();
     }
+    me.caret.restore(range);
+    me.content.focus();
   };
 
   var path = me.options.path;

@@ -30,7 +30,7 @@ function Editor(element, options) {
   this.caret = new Caret(content);
 
   // fix keyboard behavior
-  require('k-format')(content, {caret: this.caret});
+  var k = require('k-format')(content, {caret: this.caret});
 
   setupToolbar(this);
 
@@ -38,6 +38,17 @@ function Editor(element, options) {
   events.bind(content, 'click', refreshStatus(buttons));
   events.bind(content, 'keyup', refreshStatus(buttons));
   events.bind(toolbar, 'click', refreshStatus(buttons));
+  k('super+b', format.bold);
+  k('super+i', format.italic);
+  k("super+'", format.blockquote);
+  k('super+l', function(e) {
+    e.preventDefault();
+    if (!k.alt) {
+      format.ul();
+    } else {
+      format.ol();
+    }
+  });
 }
 
 /**

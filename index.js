@@ -35,15 +35,9 @@ function Editor(element, options) {
   setupToolbar(this);
 
   var buttons = toolbar.getElementsByTagName('button');
-  events.bind(content, 'click', function() {
-    refreshStatus(buttons);
-  });
-  events.bind(content, 'keyup', function() {
-    refreshStatus(buttons);
-  });
-  events.bind(toolbar, 'click', function() {
-    refreshStatus(buttons);
-  });
+  events.bind(content, 'click', refreshStatus(buttons));
+  events.bind(content, 'keyup', refreshStatus(buttons));
+  events.bind(toolbar, 'click', refreshStatus(buttons));
 }
 
 /**
@@ -197,15 +191,17 @@ function setupToolbar(me) {
 }
 
 function refreshStatus(buttons) {
-  for (var i = 0; i < buttons.length; i++) {
-    (function(button) {
-      if (format.is(button.name)) {
-        classes(button).add('ed-button-active');
-      } else {
-        classes(button).remove('ed-button-active');
-      }
-    })(buttons[i]);
-  }
+  return function() {
+    for (var i = 0; i < buttons.length; i++) {
+      (function(button) {
+        if (format.is(button.name)) {
+          classes(button).add('ed-button-active');
+        } else {
+          classes(button).remove('ed-button-active');
+        }
+      })(buttons[i]);
+    }
+  };
 }
 
 function createFileInput() {
